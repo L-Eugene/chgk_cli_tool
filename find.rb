@@ -113,6 +113,7 @@ end.select do |t|
     end
 end
 
+typel = list.map { |obj| obj.type["name"].size }.max
 list.each do |obj|
-    puts "#{(obj.difficultyForecast || '?').to_s.rjust(5) } #{obj.name} (https://rating.chgk.info/tournament/#{obj.id})"
+    puts "#{obj.type["name"].rjust(typel)} #{(obj.difficultyForecast || '?').to_s.rjust(5) } #{obj.name} (https://rating.chgk.info/tournament/#{obj.id})"
 end
