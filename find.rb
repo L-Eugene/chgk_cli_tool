@@ -108,13 +108,11 @@ end.select do |t|
     next true if options[:skip].empty?
 
     client.tournament(t.id).requests.none? do |request|
-        #puts "#{request.status} #{request.venue["id"]}"
         # C stands for Cancelled, D stands for Declined
         %w(C D).none?(request.status) && options[:skip].any?(request.venue["id"].to_s)
     end
 end
 
 list.each do |obj|
-    #puts obj.inspect
     puts "#{(obj.difficultyForecast || '?').to_s.rjust(5) } #{obj.name} (https://rating.chgk.info/tournament/#{obj.id})"
 end
