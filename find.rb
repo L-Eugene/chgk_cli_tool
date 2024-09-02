@@ -83,11 +83,13 @@ OptionParser.new do |opts|
     end
 end.parse!
 
-options.merge!(cli_options)
+file_options = if cli_options[:file] && File.exist?(cli_options[:file])
+                 YAML.load_file(cli_options[:file], symbolize_names: true)
+               else
+                 {}
+               end
 
-if options[:file] && File.exist?(options[:file])
-    options.merge!(YAML.load_file(options[:file], symbolize_names: true))
-end
+options.merge!(file_options).merge!(cli_options)
 
 if options[:file_dump]
     File.write(options[:file_dump], options.to_yaml)
